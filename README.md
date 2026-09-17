@@ -20,6 +20,7 @@ A ground-up rethinking of the original [AWS Student Community Day site](https://
 ## 2. How this redesign solves each
 
 - **P1 → "The day, hour by hour"**: a real timeline with times, breaks (visually distinct), and two tracks (Main stage / Hands-on corner) via accessible tab switcher. Every talk gets a **"You'll leave with:"** line — the *outcome*, not just the topic.
+- **P1b → "Who you'll be learning from" (speakers)**: speaker discovery is separated from the schedule because it answers a different question — *who is speaking and are they worth listening to?* Each card shows role + company (credibility), the talk title linking to its slot, time + stage (planning), and a **level filter** (All / Beginner friendly / Some basics help) so a nervous first-timer can see "6 of 8 talks assume zero background" before registering. Includes an empty state ("No talks at this level…") and a live count for screen readers (`aria-live`).
 - **P2 → Facts up front + "Is this for me?" card**: hero answers When/Where/Who/Cost in four labelled rows before any scrolling. A sticky side card honestly lists who the event fits (and one "not this one" row — telling students what an event *isn't* builds trust). Skill chips (`Beginner friendly` / `Some basics help`) appear on every session.
 - **P3 → Full registration flow**: modal form (3 fields + optional accessibility/allergy field) → **inline, friendly validation** → honest loading state → personalized confirmation ("You're in, *Riya*!") with next-3-steps and add-to-calendar. A separate **"What happens after you register?"** section shows the entire journey (confirmation → reminder → check-in → day → recordings) *before* you commit.
 - **P4 → "Getting there"**: address, metro line + gate + walk time, arrival deadline, what to bring, accessibility info — plus a hand-drawn SVG map (no API keys, no generic embed).
@@ -31,6 +32,7 @@ A ground-up rethinking of the original [AWS Student Community Day site](https://
 - Hover/focus/active on all buttons and links, `:focus-visible` rings
 - Registration: **error states** (per-field, human copy), **loading state**, **confirmation state**
 - Track switching with `role="tablist"` / `aria-selected`
+- Speaker **level filter** with live result count + empty state
 - FAQ `<details>` with animated chevron
 - Add-to-calendar generates a real **.ics file client-side** (with a 24h alarm) — works in Google/Apple/Outlook
 - Live countdown, `prefers-reduced-motion` support, skip-link, ESC/backdrop close, focus restore on modal close

@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Community Day — IGDTUW · 3 Feb 2024</title>
+<meta name="description" content="A full day of cloud talks, hands-on learning and community — designed for students. Free, beginner-friendly, at IGDTUW Delhi.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>/* AWS Community Day redesign — design system
+   Paper/ink editorial theme: warm paper bg, AWS squid-ink navy, one orange accent. */
+
+:root{
+  --paper:#f7f5ef; --paper-2:#efece4; --ink:#232f3e; --ink-soft:#5c6673;
+  --line:#dcd7cb; --accent:#e8720c; --accent-deep:#c05c07;
+  --ok:#2f7d4f; --ok-bg:#e6f2ea; --no:#8d4040; --no-bg:#f4e7e7;
+  --font-body:"Inter",system-ui,sans-serif; --font-disp:"Fraunces",Georgia,serif;
+  --radius:10px; --shadow:0 6px 24px rgba(35,47,62,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{font-family:var(--font-body);color:var(--ink);background:var(--paper);line-height:1.55;-webkit-font-smoothing:antialiased}
+img,svg{max-width:100%}
+.wrap{max-width:1060px;margin-inline:auto;padding-inline:24px}
+.skip-link{position:absolute;left:-9999px;top:0;background:var(--ink);color:#fff;padding:10px 16px;z-index:99}
+.skip-link:focus{left:0}
+/* type */
+h1,h2{font-family:var(--font-disp);font-weight:560;letter-spacing:-.01em;line-height:1.12}
+h1{font-size:clamp(2.1rem,5vw,3.4rem)}
+h2{font-size:clamp(1.5rem,3vw,2rem);margin-bottom:.35rem}
+h3{font-size:1.05rem}
+.section-sub{color:var(--ink-soft);max-width:56ch;margin-bottom:1.6rem}
+em{font-style:italic}
+a{color:var(--accent-deep)}
+/* buttons */
+.btn{font:600 .92rem var(--font-body);border-radius:999px;border:1.5px solid transparent;cursor:pointer;padding:.62em 1.3em;transition:transform .15s,box-shadow .15s,background .15s;letter-spacing:.01em}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-deep);transform:translateY(-1px);box-shadow:0 4px 14px rgba(232,114,12,.35)}
+.btn-primary:active{transform:translateY(0)}
+.btn-primary:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--ink)}
+.btn-ghost:hover{background:var(--ink);color:var(--paper)}
+.btn-lg{padding:.85em 1.6em;font-size:1rem}
+.btn-block{display:block;width:100%;text-align:center;margin-top:.6rem}
+.btn svg{vertical-align:-2px;margin-right:6px}
+/* chips */
+.chip{display:inline-block;font:600 .68rem var(--font-body);padding:.28em .75em;border-radius:999px;letter-spacing:.02em;white-space:nowrap}
+.chip-beg{background:var(--ok-bg);color:var(--ok)}
+.chip-mid{background:#fdf0e2;color:var(--accent-deep)}
+/* ============ NAV ============ */
+.nav{position:sticky;top:0;z-index:40;background:rgba(247,245,239,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav-inner{max-width:1060px;margin-inline:auto;padding:12px 24px;display:flex;align-items:center;gap:20px}
+.brand{display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--ink)}
+.brand-mark{width:14px;height:14px;border-radius:4px;background:var(--accent);display:inline-block;box-shadow:3px 3px 0 var(--ink)}
+.brand-text{font-weight:700;font-size:.95rem}
+.brand-text em{color:var(--ink-soft);font-style:normal;font-weight:500}
+.nav-links{display:flex;gap:18px;margin-left:12px}
+.nav-links a{color:var(--ink-soft);text-decoration:none;font-weight:500;font-size:.92rem}
+.nav-links a:hover{color:var(--ink)}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:14px}
+.countdown{display:flex;align-items:baseline;gap:4px;font-size:.78rem;color:var(--ink-soft)}
+.cd-num{font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+.cd-lbl{font-size:.68rem}
+.cd-sep{color:var(--line);margin-inline:2px}
+.nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:10px;flex-direction:column;gap:5px}
+.nav-toggle span{display:block;width:20px;height:2px;background:var(--ink);border-radius:2px;transition:transform .2s}
+.nav-toggle[aria-expanded="true"] span:first-child{transform:translateY(3.5px) rotate(45deg)}
+.nav-toggle[aria-expanded="true"] span:last-child{transform:translateY(-3.5px) rotate(-45deg)}
+.mobile-nav{display:none;flex-direction:column;padding:8px 24px 18px;border-top:1px solid var(--line)}
+.mobile-nav a{padding:12px 0;color:var(--ink);text-decoration:none;font-weight:600;border-bottom:1px solid var(--line)}
+/* ============ HERO ============ */
+.hero{padding:56px 0 64px;border-bottom:1px solid var(--line);background:
+  radial-gradient(circle at 85% 10%, #fdf0e2 0%, transparent 45%), var(--paper)}
+.hero-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:48px;align-items:start}
+.eyebrow{display:flex;align-items:center;gap:8px;font-weight:600;font-size:.8rem;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
+.pulse-dot{width:8px;height:8px;border-radius:50%;background:var(--ok);animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(47,125,79,.5)}70%{box-shadow:0 0 0 8px rgba(47,125,79,0)}100%{box-shadow:0 0 0 0 rgba(47,125,79,0)}}
+.hero-sub{margin-top:16px;font-size:1.05rem;color:var(--ink-soft);max-width:52ch}
+.hero-sub em{color:var(--ink);font-style:italic}
+.hero-facts{list-style:none;margin-top:22px;border:1px solid var(--line);border-radius:var(--radius);background:#fff;overflow:hidden}
+.hero-facts li{display:flex;gap:14px;padding:10px 16px;font-size:.92rem;align-items:baseline}
+.hero-facts li+li{border-top:1px solid var(--line)}
+.fact-k{flex:0 0 52px;font-weight:700;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft)}
+.hero-cta{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap}
+.hero-note{margin-top:12px;font-size:.82rem;color:var(--ok);font-weight:600}
+.hero-stats{display:flex;gap:36px;margin-top:28px}
+.hero-stats div{display:flex;flex-direction:column}
+.hero-stats dt{font-family:var(--font-disp);font-size:1.7rem;font-weight:560}
+.hero-stats dd{font-size:.8rem;color:var(--ink-soft)}
+/* "Is this for me?" card */
+.hero-card{background:var(--ink);color:var(--paper);border-radius:14px;padding:24px;position:sticky;top:96px;box-shadow:var(--shadow)}
+.hero-card h2{color:var(--paper);font-size:1.25rem;margin-bottom:14px}
+.fit-list{list-style:none}
+.fit{display:flex;flex-direction:column;gap:3px;padding:11px 0;border-top:1px solid rgba(247,245,239,.14)}
+.fit b{font-size:.7rem;text-transform:uppercase;letter-spacing:.07em}
+.fit.yes b{color:#8fd3a9}.fit.no b{color:#e8a0a0}
+.fit span{font-size:.87rem;color:#c9d1d9}
+.fit-foot{margin-top:14px;font-size:.8rem;color:#c9d1d9}
+.fit-foot .chip{margin:0 2px}
+/* ============ NEXT STEPS ============ */
+.next-steps{padding:56px 24px}
+.steps{list-style:none;display:grid;grid-template-columns:repeat(5,1fr);gap:14px;counter-reset:st}
+.step{display:flex;flex-direction:column;gap:8px;border-top:2px solid var(--line);padding-top:12px}
+.step-n{font-family:var(--font-disp);font-size:1.3rem;color:var(--accent);font-weight:560}
+.step b{font-size:.9rem}
+.step span{font-size:.8rem;color:var(--ink-soft)}
+/* ============ SCHEDULE ============ */
+.schedule{background:var(--paper-2);border-block:1px solid var(--line);padding:56px 0}
+.track-toggle{display:inline-flex;gap:4px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px;margin-bottom:28px}
+.track-btn{border:none;background:none;font:600 .85rem var(--font-body);color:var(--ink-soft);padding:.5em 1.2em;border-radius:999px;cursor:pointer;transition:color .15s}
+.track-btn:hover{color:var(--ink)}
+.track-btn.is-active{background:var(--ink);color:var(--paper)}
+.track-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.timeline{list-style:none;max-width:720px}
+.t-item{display:grid;grid-template-columns:64px 1fr;gap:18px;padding:16px 14px;border-radius:var(--radius);transition:background .15s}
+.t-item:hover{background:#fff}
+.t-item:not(.t-break):hover{box-shadow:var(--shadow)}
+.t-time{font-weight:700;font-size:.85rem;font-variant-numeric:tabular-nums;color:var(--accent-deep);padding-top:3px}
+.t-body{display:flex;flex-direction:column;gap:4px}
+.t-body b{font-size:1rem}
+.t-meta{font-size:.82rem;color:var(--ink-soft)}
+.t-take{font-size:.85rem;color:var(--ink-soft);margin-top:4px}
+.t-take::before{content:"→ ";color:var(--accent)}
+.t-break .t-body b{color:var(--ink-soft);font-weight:600}
+.t-item-empty .t-body span{color:var(--ink-soft)}
+/* ============ VENUE ============ */
+.venue{padding:56px 0}
+.venue-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:44px;align-items:start}
+.venue-facts{display:flex;flex-direction:column;gap:0;border:1px solid var(--line);border-radius:var(--radius);background:#fff;overflow:hidden}
+.venue-facts div{display:grid;grid-template-columns:130px 1fr;gap:12px;padding:13px 16px}
+.venue-facts div+div{border-top:1px solid var(--line)}
+.venue-facts dt{font-weight:700;font-size:.74rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);padding-top:2px}
+.map-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px;box-shadow:var(--shadow)}
+.map-card svg{display:block;border-radius:8px}
+.map-card figcaption{font-size:.75rem;color:var(--ink-soft);text-align:center;padding:8px 4px 2px}
+/* ============ FAQ ============ */
+.faq{padding:20px 24px 56px}
+.faq-list{max-width:720px}
+.faq-item{border-bottom:1px solid var(--line)}
+.faq-item summary{display:flex;justify-content:space-between;align-items:center;gap:12px;list-style:none;cursor:pointer;padding:17px 4px;font-weight:600}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary:hover{color:var(--accent-deep)}
+.chev{flex:0 0 10px;height:10px;border-right:2px solid var(--ink-soft);border-bottom:2px solid var(--ink-soft);transform:rotate(45deg);transition:transform .2s;margin-right:6px}
+.faq-item[open] .chev{transform:rotate(-135deg);margin-top:6px}
+.faq-item p{padding:0 4px 18px;color:var(--ink-soft);font-size:.94rem;max-width:60ch}
+/* ============ AFTER ============ */
+.after{background:var(--ink);color:var(--paper);padding:56px 0}
+.after h2{color:var(--paper)}
+.after .section-sub{color:#c9d1d9}
+.after-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.after-card{background:rgba(247,245,239,.06);border:1px solid rgba(247,245,239,.14);border-radius:12px;padding:20px}
+.after-card h3{color:var(--paper);margin-bottom:8px}
+.after-card p{font-size:.88rem;color:#c9d1d9}
+.after-when{display:inline-block;margin-top:12px;font-size:.7rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#e8a0a0}
+/* ============ FOOTER ============ */
+.footer{border-top:1px solid var(--line);padding:32px 0;background:var(--paper)}
+.footer-grid{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:center}
+.footer-sub{color:var(--ink-soft);font-size:.85rem}
+.footer-links{display:flex;gap:18px;font-size:.88rem}
+.footer-credit{font-size:.75rem;color:var(--ink-soft)}
+/* ============ MODAL ============ */
+.modal-root{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:20px}
+.modal-backdrop{position:absolute;inset:0;background:rgba(35,47,62,.55);backdrop-filter:blur(3px);animation:fadeIn .2s}
+@keyframes fadeIn{from{opacity:0}}
+.modal{position:relative;width:min(480px,100%);max-height:92vh;overflow:auto;background:var(--paper);border-radius:16px;padding:28px;box-shadow:var(--shadow);animation:pop .22s cubic-bezier(.2,.9,.3,1.2)}
+@keyframes pop{from{opacity:0;transform:translateY(14px) scale(.98)}}
+.modal-x{position:absolute;top:12px;right:12px;border:none;background:none;font-size:1rem;color:var(--ink-soft);cursor:pointer;padding:8px;border-radius:50%;line-height:1}
+.modal-x:hover{background:var(--paper-2);color:var(--ink)}
+.modal h2{font-size:1.35rem}
+.modal-sub{color:var(--ink-soft);font-size:.9rem;margin:.3rem 0 1.2rem}
+.field{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
+.field>span{font-weight:600;font-size:.84rem}
+.field .opt{font-weight:400;color:var(--ink-soft);font-size:.75rem}
+.field input{font:inherit;padding:11px 13px;border:1.5px solid var(--line);border-radius:8px;background:#fff;transition:border-color .15s}
+.field input:focus{outline:none;border-color:var(--accent)}
+.field.invalid input{border-color:#c0453f;background:#fdf6f5}
+.field-err{font-style:normal;font-size:.76rem;color:#c0453f}
+.field-hint{font-size:.78rem;color:var(--ink-soft);margin:-4px 0 14px}
+.modal-hint{font-size:.78rem;color:var(--ink-soft);border-top:1px dashed var(--line);padding-top:12px;margin-bottom:16px}
+/* loading + confirmation */
+.spinner{width:38px;height:38px;margin:34px auto 14px;border-radius:50%;border:3.5px solid var(--line);border-top-color:var(--accent);animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.confirm{text-align:left}
+.confirm-mark{width:44px;margin:2px auto 12px}
+.confirm-mark svg{animation:pop .3s .05s backwards}
+.confirm h2{text-align:center}
+.confirm .modal-sub{text-align:center}
+.confirm-box{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:14px}
+.confirm-box p{margin-bottom:6px;font-size:.84rem}
+.confirm-box ol{padding-left:20px;font-size:.86rem;color:var(--ink-soft)}
+.confirm-box li{margin:3px 0}
+.confirm-note{font-size:.76rem;color:var(--ink-soft);text-align:center;margin-top:12px}
+/* ============ RESPONSIVE ============ */
+@media (max-width:900px){
+  .hero-grid,.venue-grid{grid-template-columns:1fr}
+  .hero-card{position:static}
+  .steps{grid-template-columns:repeat(2,1fr)}
+  .after-cards{grid-template-columns:1fr}
+}
+@media (max-width:700px){
+  .nav-links,.countdown{display:none}
+  .nav-toggle{display:flex;margin-left:auto}
+  .nav-right .btn{display:none}
+  .nav-toggle{order:3}
+  .mobile-nav{display:flex}
+  .hero{padding:36px 0}
+  .hero-stats{gap:22px}
+  .steps{grid-template-columns:1fr}
+  .venue-facts div{grid-template-columns:1fr;gap:2px}
+  .footer-grid{flex-direction:column;align-items:flex-start}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001s!important;transition-duration:.001s!important}
+  html{scroll-behavior:auto}
+}
+
+
+
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-text">AWS Cloud Club <em>IGDTUW</em></span></a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#schedule">Schedule</a><a href="#getting-there">Getting there</a><a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav-right">
+      <div class="countdown" id="countdown" aria-live="polite">
+        <span class="cd-num" id="cd-d">21</span><span class="cd-lbl">days</span>
+        <span class="cd-sep">·</span><span class="cd-num" id="cd-h">09</span><span class="cd-lbl">hrs</span>
+      </div>
+      <button class="btn btn-primary" data-open-register>Register — free</button>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mobileNav" aria-label="Menu"><span></span><span></span></button>
+  </div>
+  <div class="mobile-nav" id="mobileNav" hidden>
+    <a href="#schedule">Schedule</a><a href="#getting-there">Getting there</a><a href="#faq">FAQ</a>
+    <button class="btn btn-primary btn-block" data-open-register>Register — free</button>
+  </div>
+</header>
+<main id="main">
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="pulse-dot" aria-hidden="true"></span> Registration open · 250 seats</p>
+      <h1>One day of cloud, taught by people who use it.</h1>
+      <p class="hero-sub">9 industry speakers, hands-on demos and a hall full of curious students — at IGDTUW, Delhi. Come for the talks; leave knowing what <em>your</em> cloud career could look like.</p>
+      <ul class="hero-facts" role="list">
+        <li><span class="fact-k">When</span><time datetime="2024-02-03">Sat, 3 Feb 2024</time> · 9:00 am – 5:30 pm</li>
+        <li><span class="fact-k">Where</span>Auditorium, IGDTUW, Kashmere Gate, Delhi</li>
+        <li><span class="fact-k">Who</span>All students — any college, any year, any stream</li>
+        <li><span class="fact-k">Cost</span>Free · lunch &amp; snacks included</li>
+      </ul>
+      <div class="hero-cta">
+        <button class="btn btn-primary btn-lg" data-open-register>Register — it's free</button>
+        <button class="btn btn-ghost btn-lg" id="calBtn">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M1.5 6h13M5 1.5v2.5M11 1.5v2.5" stroke="currentColor" stroke-width="1.5"/></svg>
+          Add to calendar</button>
+      </div>
+      <p class="hero-note" id="calNote" hidden>Added — check your downloads for the .ics file</p>
+      <dl class="hero-stats">
+        <div><dt>250+</dt><dd>attendees</dd></div><div><dt>9</dt><dd>talks</dd></div><div><dt>10+</dt><dd>professionals</dd></div>
+      </dl>
+    </div>
+    <aside class="hero-card" aria-label="Who should attend">
+      <h2>Is this for me?</h2>
+      <ul class="fit-list" role="list">
+        <li class="fit yes"><b>Fits you</b><span>You've heard "cloud" everywhere and want to actually understand it</span></li>
+        <li class="fit yes"><b>Fits you</b><span>You're deciding between paths — dev, data, security, ops</span></li>
+        <li class="fit yes"><b>Fits you</b><span>You want to talk to real engineers, not just watch YouTube</span></li>
+        <li class="fit no"><b>Not this one</b><span>You want a certification bootcamp — our weekly workshops suit you better</span></li>
+      </ul>
+      <p class="fit-foot">Every talk is tagged <span class="chip chip-beg">Beginner friendly</span> or <span class="chip chip-mid">Some basics help</span> so you can plan your day.</p>
+    </aside>
+  </div>
+</section>
+<section class="next-steps wrap" aria-labelledby="next-h">
+  <h2 id="next-h">What happens after you register?</h2>
+  <p class="section-sub">No black box. Here's exactly what to expect, in order.</p>
+  <ol class="steps" role="list">
+    <li class="step"><span class="step-n">1</span><div><b>Confirmation email</b><span>Within minutes, from cloudclub@igdtuw.ac.in — check spam if missing.</span></div></li>
+    <li class="step"><span class="step-n">2</span><div><b>Reminder, 24h before</b><span>Full schedule + a "what to bring" list. Unsubscribe any time.</span></div></li>
+    <li class="step"><span class="step-n">3</span><div><b>Check in at the desk</b><span>Show the QR from your email. 8:15–9:00 am, outside the auditorium.</span></div></li>
+    <li class="step"><span class="step-n">4</span><div><b>The day itself</b><span>Talks, lunch, an interactive activity, and goodies on your way out.</span></div></li>
+    <li class="step"><span class="step-n">5</span><div><b>Slides &amp; recordings</b><span>Emailed to everyone who checked in — no need to attend everything live.</span></div></li>
+  </ol>
+</section>
+<section class="schedule" id="schedule">
+  <div class="wrap">
+    <h2>The day, hour by hour</h2>
+    <p class="section-sub">Two tracks run side by side — move between them freely, no pre-booking.</p>
+    <div class="track-toggle" role="tablist" aria-label="Choose track">
+      <button class="track-btn is-active" role="tab" aria-selected="true" data-track="main">Main stage</button>
+      <button class="track-btn" role="tab" aria-selected="false" data-track="hands">Hands-on corner</button>
+    </div>
+    <ol class="timeline" role="list" data-track-panel="main">
+      <li class="t-item t-break"><span class="t-time">08:15</span><div class="t-body"><b>Check-in opens</b><span>Bring your QR + college ID.</span></div></li>
+      <li class="t-item"><span class="t-time">09:00</span><div class="t-body"><b>Opening &amp; what to expect</b><span class="t-meta">Club core team · 15 min</span></div></li>
+      <li class="t-item"><span class="t-time">09:15</span><div class="t-body"><b>Two Journeys, One Cloud: Career Pathways</b><span class="t-meta">Jen Looper · AWS Academic Advocacy</span><p class="t-take">You'll leave with: the realistic entry paths into cloud roles, and what each demands.</p><span class="chip chip-beg">Beginner friendly</span></div></li>
+      <li class="t-item"><span class="t-time">10:05</span><div class="t-body"><b>Generative AI — asking for a friend</b><span class="t-meta">Kristine Howard · AWS DevRel, APAC</span><p class="t-take">You'll leave with: a working mental model of gen-AI on AWS — minus the hype.</p><span class="chip chip-beg">Beginner friendly</span></div></li>
+      <li class="t-item t-break"><span class="t-time">11:00</span><div class="t-body"><b>Tea break</b><span>20 min · networking games on the lawn</span></div></li>
+      <li class="t-item"><span class="t-time">11:20</span><div class="t-body"><b>Unlocking &amp; Mastering Cloud Basics</b><span class="t-meta">Varsha Verma · Sr. Cloud Ops Engineer, Accenture</span><p class="t-take">You'll leave with: the core blocks — compute, storage, networking — you'll meet everywhere.</p><span class="chip chip-beg">Beginner friendly</span></div></li>
+      <li class="t-item"><span class="t-time">12:10</span><div class="t-body"><b>AWS Security with IAM</b><span class="t-meta">Gargee Bhatnagar · Consultant, Capgemini · AWS Community Builder</span><p class="t-take">You'll leave with: why "least privilege" matters, told through a real breach story.</p><span class="chip chip-mid">Some basics help</span></div></li>
+      <li class="t-item t-break"><span class="t-time">13:00</span><div class="t-body"><b>Lunch</b><span>60 min · veg &amp; Jain options, allergen-labelled</span></div></li>
+      <li class="t-item"><span class="t-time">14:00</span><div class="t-body"><b>Empowering Future Innovators: CI/CD with AWS</b><span class="t-meta">Dipali · VP Data Engineering, NatWest · AWS Hero</span><p class="t-take">You'll leave with: a live pipeline from commit to deploy — and the vocabulary for it.</p><span class="chip chip-mid">Some basics help</span></div></li>
+      <li class="t-item"><span class="t-time">14:50</span><div class="t-body"><b>Making the right moves in a professional landscape</b><span class="t-meta">Rashmi Nambiar · Principal Marketing Manager, AWS</span><p class="t-take">You'll leave with: how to present student projects so recruiters actually read them.</p><span class="chip chip-beg">Beginner friendly</span></div></li>
+      <li class="t-item"><span class="t-time">15:40</span><div class="t-body"><b>re:Invent recap</b><span class="t-meta">Payal Gupta · Cloud Engineer, Dremio</span><p class="t-take">You'll leave with: the biggest announcements, filtered for students.</p><span class="chip chip-beg">Beginner friendly</span></div></li>
+      <li class="t-item"><span class="t-time">16:20</span><div class="t-body"><b>Climbing the Cloud Ladder: Your AWS Career Guide</b><span class="t-meta">Rajani · AWS Community Builder</span><p class="t-take">You'll leave with: a personal roadmap — free credits, certs, community — in order.</p><span class="chip chip-beg">Beginner friendly</span></div></li>
+      <li class="t-item t-break"><span class="t-time">17:15</span><div class="t-body"><b>Goodies, group photo &amp; goodbye</b><span>Certificates emailed within a week to everyone who checked in.</span></div></li>
+    </ol>
+    <ol class="timeline" role="list" data-track-panel="hands" hidden>
+      <li class="t-item"><span class="t-time">11:20</span><div class="t-body"><b>Guided console tour</b><span class="t-meta">Club volunteers · Room A-104</span><p class="t-take">You'll leave with: a safe free account, a console tour, and a deployed static site.</p><span class="chip chip-beg">Beginner friendly</span></div></li>
+      <li class="t-item"><span class="t-time">14:00</span><div class="t-body"><b>Career Q&amp;A corner</b><span class="t-meta">Speakers rotate · Foyer</span><p class="t-take">Small-group, no-mic questions with speakers. Bring your résumé if you want it read.</p><span class="chip chip-beg">Beginner friendly</span></div></li>
+      <li class="t-item t-break"><span class="t-time">16:20</span><div class="t-body"><b>Cloud quiz &amp; prizes</b><span>Teams of 2 · winners take home goodies</span></div></li>
+    </ol>
+  </div>
+</section>
+<section class="venue" id="getting-there">
+  <div class="wrap venue-grid">
+    <div>
+      <h2>Getting there</h2>
+      <p class="section-sub">Everything you need the morning of — in one place.</p>
+      <dl class="venue-facts">
+        <div><dt>Address</dt><dd>Auditorium, IGDTUW, Kashmere Gate, Delhi — 110006</dd></div>
+        <div><dt>Nearest metro</dt><dd><b>Kashmere Gate</b> (Red / Yellow / Violet), Gate 2 — 7 min walk. Follow signs to the university main gate.</dd></div>
+        <div><dt>Arrive by</dt><dd>8:15 am for a good seat. Doors close 9:10 am for the opening.</dd></div>
+        <div><dt>Bring</dt><dd>QR from your email, college ID, a water bottle. Laptop <em>only</em> for the hands-on corner (power strips provided).</dd></div>
+        <div><dt>Accessibility</dt><dd>Step-free side-ramp entrance, accessible washrooms on the ground floor. Need more? <a href="mailto:cloudclub@igdtuw.ac.in">Email us</a> — we'll sort it.</dd></div>
+      </dl>
+    </div>
+    <figure class="map-card" role="img" aria-label="Simple sketch map of IGDTUW near Kashmere Gate metro">
+      <svg viewBox="0 0 360 300" aria-hidden="true">
+        <rect width="360" height="300" rx="10" fill="#efece4"/>
+        <path d="M20 250 C90 235 120 190 110 130 C102 80 140 45 195 40 C255 34 330 55 345 110" fill="none" stroke="#b9b2a4" stroke-width="10" stroke-linecap="round" opacity=".35"/>
+        <text x="30" y="272" font-family="Inter" font-size="11" fill="#8a8272">Ring Road</text>
+        <rect x="60" y="80" width="150" height="120" rx="8" fill="#232f3e"/>
+        <text x="135" y="138" text-anchor="middle" font-family="Inter" font-weight="700" font-size="13" fill="#f7f5ef">IGDTUW</text>
+        <text x="135" y="156" text-anchor="middle" font-family="Inter" font-size="10" fill="#c9d1d9">Main auditorium</text>
+        <circle cx="285" cy="235" r="11" fill="#e8720c"/>
+        <text x="285" y="239" text-anchor="middle" font-family="Inter" font-weight="700" font-size="10" fill="#fff">M</text>
+        <text x="285" y="262" text-anchor="middle" font-family="Inter" font-size="10" fill="#8a8272">Kashmere Gate metro</text>
+        <path d="M210 200 C235 210 255 222 276 231" fill="none" stroke="#e8720c" stroke-width="3" stroke-dasharray="2 6" stroke-linecap="round"/>
+        <text x="243" y="207" font-family="Inter" font-size="10" fill="#e8720c" text-anchor="middle">7 min walk</text>
+      </svg>
+      <figcaption>Not to scale — follow metro Gate 2 signs on the day.</figcaption>
+    </figure>
+  </div>
+</section>
+<section class="wrap faq" id="faq">
+  <h2>Questions students actually ask</h2>
+  <div class="faq-list">
+    <details class="faq-item"><summary>I'm not from IGDTUW or a CS background. Can I still come?<span class="chev" aria-hidden="true"></span></summary><p>Yes — any college, year, and stream. Talks tagged <span class="chip chip-beg">Beginner friendly</span> assume zero cloud knowledge.</p></details>
+    <details class="faq-item"><summary>Do I have to attend the whole day?<span class="chev" aria-hidden="true"></span></summary><p>No. Check in once in the morning and attend whatever fits — you still get the certificate and recordings.</p></details>
+    <details class="faq-item"><summary>Is food included? What about allergies?<span class="chev" aria-hidden="true"></span></summary><p>Lunch and snacks are free. Veg and Jain options always; allergen labels on every dish. Note severe allergies in the form and we'll coordinate with caterers.</p></details>
+    <details class="faq-item"><summary>Will I get a certificate?<span class="chev" aria-hidden="true"></span></summary><p>Yes — an e-certificate within a week to everyone who checks in. No per-session tracking, no penalty for stepping out.</p></details>
+    <details class="faq-item"><summary>I registered but can't come anymore.<span class="chev" aria-hidden="true"></span></summary><p><a href="mailto:cloudclub@igdtuw.ac.in">Email us</a> so your seat goes to someone on the waitlist — no hard feelings.</p></details>
+  </div>
+</section>
+<section class="after">
+  <div class="wrap">
+    <h2>Missed it, or want more?</h2>
+    <p class="section-sub">The event shouldn't end when the auditorium empties.</p>
+    <div class="after-cards">
+      <article class="after-card"><h3>Slides &amp; recordings</h3><p>Emailed to all attendees, and on the club's GitHub with descriptions and further-reading links per talk.</p><span class="after-when">Within 48h of the event</span></article>
+      <article class="after-card"><h3>Keep practising</h3><p>Free AWS credits for students, weekly hands-on workshops, and a curated path from "what is cloud" to your first deployment.</p><span class="after-when">Ongoing · club community</span></article>
+      <article class="after-card"><h3>Tell us what worked</h3><p>A 2-minute anonymous feedback form after the event decides next year's talks, food, and tracks. Brutal honesty encouraged.</p><span class="after-when">Feedback form · 3 Feb</span></article>
+    </div>
+  </div>
+</section>
+<footer class="footer">
+  <div class="wrap footer-grid">
+    <div><p class="brand-text">AWS Cloud Club <em>IGDTUW</em></p><p class="footer-sub">A student-run community. Everything here is free, always.</p></div>
+    <div class="footer-links"><a href="mailto:cloudclub@igdtuw.ac.in">Email the team</a><a href="#schedule">Schedule</a><a href="#faq">FAQ</a></div>
+    <p class="footer-credit">Designed around the questions students actually ask.</p>
+  </div>
+</footer>
+</main>
+<div class="modal-root" id="regModal" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="regTitle">
+    <form id="regForm" class="modal-step" novalidate>
+      <button type="button" class="modal-x" data-close-modal aria-label="Close">✕</button>
+      <h2 id="regTitle">Register for AWS Community Day</h2>
+      <p class="modal-sub">Free · 3 Feb 2024 · IGDTUW, Delhi. Takes about 40 seconds.</p>
+      <label class="field"><span>Name</span><input name="name" type="text" required autocomplete="name" placeholder="Your full name"><em class="field-err" data-err hidden>Please enter your name so we can print your badge.</em></label>
+      <label class="field"><span>Email</span><input name="email" type="email" required autocomplete="email" placeholder="you@college.edu"><em class="field-err" data-err hidden>That email doesn't look right — double-check it?</em></label>
+      <label class="field"><span>College &amp; year</span><input name="college" type="text" required placeholder="e.g. IGDTUW, 2nd year"><em class="field-err" data-err hidden>We need this for headcount per college.</em></label>
+      <label class="field"><span>Anything we should plan for? <i class="opt">optional</i></span><input name="notes" type="text" placeholder="Allergies, accessibility needs, anything at all"></label>
+      <p class="modal-hint">No account, no payment, no spam. One confirmation email + one reminder — that's it.</p>
+      <button class="btn btn-primary btn-lg btn-block" type="submit">Confirm my seat</button>
+      <button class="btn btn-ghost btn-lg btn-block" type="button" data-close-modal>Not now</button>
+    </form>
+    <div class="modal-step" data-step="loading" hidden>
+      <div class="spinner" role="status" aria-label="Registering"></div>
+      <p class="modal-sub" style="text-align:center">Reserving your seat…</p>
+    </div>
+    <div class="modal-step confirm" data-step="done" hidden>
+      <div class="confirm-mark" aria-hidden="true"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="none" stroke="#e8720c" stroke-width="3"/><path d="M12 21l5 5 11-11" fill="none" stroke="#e8720c" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h2>You're in, <span id="confName">friend</span>!</h2>
+      <p class="modal-sub">A confirmation with your check-in QR is on its way to <b id="confEmail">your inbox</b> — usually a couple of minutes.</p>
+      <div class="confirm-box">
+        <p><b>Your next 3 steps</b></p>
+        <ol><li>Add it to your calendar so it doesn't sneak up on you</li><li>Watch for the reminder email on 2 Feb</li><li>Show the QR + college ID at check-in, 8:15–9:00 am</li></ol>
+      </div>
+      <button class="btn btn-primary btn-lg btn-block" id="confCalBtn">Add to calendar</button>
+      <button class="btn btn-ghost btn-lg btn-block" data-close-modal>Back to the site</button>
+      <p class="confirm-note">Something came up? <a href="mailto:cloudclub@igdtuw.ac.in">Email us</a> and we'll release your seat — no questions asked.</p>
+    </div>
+  </div>
+</div>
+<script>/* AWS Community Day — interactions
+   No frameworks. Four things: registration modal flow (form -> loading -> confirmation),
+   track tabs, live countdown, and client-side .ics calendar file generation. */
+(function () {
+  "use strict";
+
+  var EVENT = {
+    title: "AWS Community Day — IGDTUW",
+    start: new Date("2024-02-03T09:00:00+05:30"),
+    end: new Date("2024-02-03T17:30:00+05:30"),
+    loc: "Auditorium, IGDTUW, Kashmere Gate, Delhi",
+    desc: "A full day of cloud talks and hands-on learning for students. Check-in 8:15-9:00 am; bring the QR from your email + college ID."
+  };
+
+  /* ---------- mobile nav ---------- */
+  var navToggle = document.getElementById("navToggle");
+  var mobileNav = document.getElementById("mobileNav");
+  navToggle.addEventListener("click", function () {
+    var open = navToggle.getAttribute("aria-expanded") === "true";
+    navToggle.setAttribute("aria-expanded", String(!open));
+    mobileNav.hidden = open;
+  });
+  mobileNav.addEventListener("click", function (e) {
+    if (e.target.tagName === "A") { mobileNav.hidden = true; navToggle.setAttribute("aria-expanded", "false"); }
+  });
+
+  /* ---------- countdown ---------- */
+  var cd = { d: document.getElementById("cd-d"), h: document.getElementById("cd-h") };
+  function tick() {
+    var now = new Date();
+    if (now > EVENT.start) {
+      cd.d.textContent = "00"; cd.h.textContent = "00";
+      document.getElementById("countdown").title = "It's event day! Doors open 8:15 am.";
+      return;
+    }
+    var ms = EVENT.start - now;
+    cd.d.textContent = String(Math.floor(ms / 864e5)).padStart(2, "0");
+    cd.h.textContent = String(Math.floor((ms % 864e5) / 36e5)).padStart(2, "0");
+  }
+  tick(); setInterval(tick, 60000);
+
+  /* ---------- track tabs ---------- */
+  var trackBtns = document.querySelectorAll(".track-btn");
+  var panels = document.querySelectorAll("[data-track-panel]");
+  trackBtns.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      trackBtns.forEach(function (b) { b.classList.toggle("is-active", b === btn); b.setAttribute("aria-selected", String(b === btn)); });
+      panels.forEach(function (p) { p.hidden = p.getAttribute("data-track-panel") !== btn.getAttribute("data-track"); });
+    });
+  });
+
+  /* ---------- .ics generation (no external service) ---------- */
+  function pad(n) { return String(n).padStart(2, "0"); }
+  function ics(dt) {
+    return dt.getUTCFullYear() + pad(dt.getUTCMonth() + 1) + pad(dt.getUTCDate()) + "T" +
+      pad(dt.getUTCHours()) + pad(dt.getUTCMinutes()) + pad(dt.getUTCSeconds()) + "Z";
+  }
+  function addToCalendar() {
+    var icsText = [
+      "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//AWS Cloud Club IGDTUW//Community Day//EN",
+      "BEGIN:VEVENT",
+      "UID:" + Date.now() + "@awscloudclub-igdtuw",
+      "DTSTAMP:" + ics(new Date()),
+      "DTSTART:" + ics(EVENT.start),
+      "DTEND:" + ics(EVENT.end),
+      "SUMMARY:" + EVENT.title,
+      "LOCATION:" + EVENT.loc,
+      "DESCRIPTION:" + EVENT.desc.replace(/,/g, "\\,"),
+      "BEGIN:VALARM", "TRIGGER:-P1D", "ACTION:DISPLAY", "DESCRIPTION:AWS Community Day is tomorrow", "END:VALARM",
+      "END:VEVENT", "END:VCALENDAR"
+    ].join("\r\n");
+    var blob = new Blob([icsText], { type: "text/calendar" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "aws-community-day.ics";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+    var note = document.getElementById("calNote");
+    if (note) { note.hidden = false; setTimeout(function () { note.hidden = true; }, 5000); }
+  }
+  document.getElementById("calBtn").addEventListener("click", addToCalendar);
+
+  /* ---------- registration modal: form -> loading -> confirmation ---------- */
+  var modal = document.getElementById("regModal");
+  var form = document.getElementById("regForm");
+  var lastFocus = null;
+
+  function openModal() {
+    lastFocus = document.activeElement;
+    modal.hidden = false;
+    form.hidden = false;
+    modal.querySelectorAll(".modal-step").forEach(function (s) { if (s !== form) s.hidden = true; });
+    document.body.style.overflow = "hidden";
+    form.querySelector("input").focus();
+  }
+  function closeModal() {
+    modal.hidden = true;
+    document.body.style.overflow = "";
+    if (lastFocus) lastFocus.focus();
+  }
+  document.querySelectorAll("[data-open-register]").forEach(function (b) {
+    b.addEventListener("click", function () { mobileNav.hidden = true; openModal(); });
+  });
+  modal.addEventListener("click", function (e) {
+    if (e.target.closest("[data-close-modal]")) closeModal();
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !modal.hidden) closeModal();
+  });
+
+  /* inline validation — friendly, per-field */
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var ok = true, firstBad = null;
+    form.querySelectorAll(".field").forEach(function (f) {
+      var input = f.querySelector("input");
+      var err = f.querySelector("[data-err]");
+      if (!err) return;
+      var bad = !input.value.trim() ||
+        (input.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(input.value));
+      f.classList.toggle("invalid", bad);
+      err.hidden = !bad;
+      if (bad) { ok = false; if (!firstBad) firstBad = input; }
+    });
+    if (!ok) { firstBad.focus(); return; }
+
+    var name = form.elements.name.value.trim();
+    var email = form.elements.email.value.trim();
+    form.hidden = true;
+    var loading = modal.querySelector('[data-step="loading"]');
+    loading.hidden = false;
+    /* simulated latency so the loading state is honest, not decorative */
+    setTimeout(function () {
+      loading.hidden = true;
+      document.getElementById("confName").textContent = name.split(" ")[0];
+      document.getElementById("confEmail").textContent = email;
+      modal.querySelector('[data-step="done"]').hidden = false;
+    }, 1100);
+  });
+  form.querySelectorAll("input").forEach(function (input) {
+    input.addEventListener("input", function () {
+      var f = input.closest(".field");
+      f.classList.remove("invalid");
+      var err = f.querySelector("[data-err]");
+      if (err) err.hidden = true;
+    });
+  });
+  document.getElementById("confCalBtn").addEventListener("click", addToCalendar);
+})();
+
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
