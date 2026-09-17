@@ -12,9 +12,9 @@
   var EVENT = {
     title: "AWS Community Day — IGDTUW",
 
-    start: new Date("2024-02-03T09:00:00+05:30"),
+    start: new Date("2026-12-05T09:00:00+05:30"),
 
-    end: new Date("2024-02-03T17:30:00+05:30"),
+    end: new Date("2026-12-05T17:30:00+05:30"),
 
     loc: "Auditorium, IGDTUW, Kashmere Gate, Delhi",
 
